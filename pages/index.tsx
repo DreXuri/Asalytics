@@ -1,9 +1,25 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import { useQuery } from "@apollo/client";
+import type { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import Card from "../components/card/card";
+import { GET_LIST } from "../queries";
+import styles from "../styles/Home.module.css";
+import { IAsaList } from "../types";
 
 const Home: NextPage = () => {
+  const { loading, error, data } = useQuery<IAsaList>(GET_LIST);
+
+  console.log(data?.asalist.result);
+
+  if (loading) {
+    return <h1>loading...</h1>;
+  }
+
+  if (error) {
+    return <h1>Error de o...</h1>;
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,61 +28,40 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
+      <main className={styles.ma}>
+        <div>
+          <div className={styles.titleBar}>
+            <div className={styles.title}>
+              <Image
+                src="/asset/headerlogo.svg"
+                alt="head Logo"
+                width={108.94}
+                height={50}
+              />
+            </div>
+            <div className={styles.button}>
+              <button className={styles.butt}>ANALYZE ASAs</button>
+            </div>
+          </div>
+        </div>
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
+          List of Algorand Standard Assets on ASAlytics
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          {data?.asalist.result.map((item) => (
+            <Card
+              key={item.assetId}
+              assetId={item.assetId}
+              name={item.name}
+              logo={item.logo}
+              available={false}
+            />
+          ))}
         </div>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
