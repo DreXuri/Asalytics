@@ -6,6 +6,7 @@ import Card from "../components/card/card";
 import { GET_LIST } from "../queries";
 import styles from "../styles/Home.module.css";
 import { IAsaList } from "../types";
+import { Triangle } from "react-loader-spinner";
 
 const Home: NextPage = () => {
   const { loading, error, data } = useQuery<IAsaList>(GET_LIST);
@@ -13,11 +14,25 @@ const Home: NextPage = () => {
   console.log(data?.asalist.result);
 
   if (loading) {
-    return <h1>loading...</h1>;
+    return (
+      <div className={styles.load}>
+        <h1> Welcome to Analytics 🚀</h1>
+        <Triangle
+          height="80"
+          width="80"
+          color="green"
+          ariaLabel="three-dots-loading"
+        />
+      </div>
+    );
   }
-
   if (error) {
-    return <h1>Error de o...</h1>;
+    return (
+      <h1>
+        Error
+        <span> ||404</span>
+      </h1>
+    );
   }
 
   return (
