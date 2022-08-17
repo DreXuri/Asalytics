@@ -1,5 +1,5 @@
 .card {
-  margin: 1rem;
+  margin: auto;
   padding: 32px 0px 32px 0px;
   text-align: center;
   color: inherit;
@@ -49,4 +49,13 @@
 .logo {
   height: 1.2em;
   margin-left: 0.5rem;
+}
+
+@media (max-width: 446px) {
+  .card {
+    margin: auto;
+    padding: 12px 0px;
+    width: 60vw;
+    height: 20vh;
+  }
 }

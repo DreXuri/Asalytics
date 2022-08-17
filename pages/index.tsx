@@ -28,7 +28,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.ma}>
+      <main>
         <div>
           <div className={styles.titleBar}>
             <div className={styles.title}>
