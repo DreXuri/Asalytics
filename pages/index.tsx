@@ -28,10 +28,9 @@ const Home: NextPage = () => {
   }
   if (error) {
     return (
-      <h1>
-        Error
-        <span> ||404</span>
-      </h1>
+      <div className={styles.error}>
+        <h1 className={styles.err}>Error || 404</h1>
+      </div>
     );
   }
 
